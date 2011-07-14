@@ -5,7 +5,8 @@ class NotifierHook < Redmine::Hook::Listener
     @project = context[:project]
     @issue = context[:issue]
     @author = @issue.author
-    speak "#{@author.lastname} #{@author.firstname} 建立主旨:「#{@issue.subject}」. 狀態:「#{@issue.status.name}」. 意見:「#{truncate_words(@issue.description)}」"
+    @receiver = @issue.assigned_to
+    speak "#{@author.lastname} #{@author.firstname} 建立主旨:「#{@issue.subject}」. 狀態:「#{@issue.status.name}」. 分派給:「#{@receiver.lastname} #{@receiver.firstname}」. 意見:「#{truncate_words(@issue.description)}」"
     speak "網址: http://#{Setting.host_name}/issues/#{@issue.id}"
   end
   
@@ -14,7 +15,8 @@ class NotifierHook < Redmine::Hook::Listener
     @issue = context[:issue]
     @journal = context[:journal]
     @editor = @journal.editor
-    speak "#{@editor.lastname} #{@editor.firstname} 編輯主旨:「#{@issue.subject}」. 狀態:「#{@issue.status.name}」. 意見:「#{truncate_words(@journal.notes)}」"
+    @receiver = @issue.assigned_to
+    speak "#{@editor.lastname} #{@editor.firstname} 編輯主旨:「#{@issue.subject}」. 狀態:「#{@issue.status.name}」. 分派給:「#{@receiver.lastname} #{@receiver.firstname}」. 意見:「#{truncate_words(@journal.notes)}」"
     speak "網址: http://#{Setting.host_name}/issues/#{@issue.id}"
   end
 
