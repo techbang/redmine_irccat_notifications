@@ -59,7 +59,7 @@ private
 
   def issue_status_changed?(issue)
     if issue.status_id_changed?
-      old_status = IssueStatu.find(issue.status_id_was)
+      old_status = IssueStatus.find(issue.status_id_was)
       "從 #{old_status.name} 變更為 #{issue.status.name}"
     else
       "#{issue.status.name}"
