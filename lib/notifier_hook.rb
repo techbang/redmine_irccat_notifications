@@ -10,7 +10,7 @@ class NotifierHook < Redmine::Hook::Listener
     speak "網址: http://#{Setting.host_name}/issues/#{@issue.id}"
   end
   
-  def controller_issues_edit_after_save(context = { })
+  def controller_issues_edit_before_save(context = { })
     @project = context[:project]
     @issue = context[:issue]
     @journal = context[:journal]
