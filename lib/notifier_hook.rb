@@ -6,7 +6,8 @@ class NotifierHook < Redmine::Hook::Listener
     @issue = context[:issue]
     @author = @issue.author
     @assigned_message = @issue.assigned_to.nil? ? "無" : "#{@issue.assigned_to.lastname} #{@issue.assigned_to.firstname}"
-    speak "#{@author.lastname} #{@author.firstname} 建立主旨:「#{@issue.subject}」. 狀態:「#{@issue.status.name}」. 分派給:「#{@assigned_message}」. 意見:「#{truncate_words(@issue.description)}」"
+    speak "#{@author.lastname} #{@author.firstname} 建立主旨:「#{@issue.subject}」"
+    speak "狀態:「#{@issue.status.name}」. 分派給:「#{@assigned_message}」. 意見:「#{truncate_words(@issue.description)}」"
     speak "網址: http://#{Setting.host_name}/issues/#{@issue.id}"
   end
 
@@ -17,7 +18,8 @@ class NotifierHook < Redmine::Hook::Listener
     @editor = @journal.user
     @assigned_message = issue_assigned_changed?(@issue)
     @status_message = issue_status_changed?(@issue)
-    speak "#{@editor.lastname} #{@editor.firstname} 編輯主旨:「#{@issue.subject}」. 狀態:「#{@status_message}」. 分派給:「#{@assigned_message}」. 意見:「#{truncate_words(@journal.notes)}」"
+    speak "#{@editor.lastname} #{@editor.firstname} 編輯主旨:「#{@issue.subject}」"
+    speak "狀態:「#{@status_message}」. 分派給:「#{@assigned_message}」. 意見:「#{truncate_words(@journal.notes)}」"
     speak "網址: http://#{Setting.host_name}/issues/#{@issue.id}"
   end
 
