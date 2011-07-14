@@ -15,7 +15,7 @@ class NotifierHook < Redmine::Hook::Listener
     @issue = context[:issue]
     @journal = context[:journal]
     @editor = @journal.user
-    @assigned_message = @issue.assigned_to.nil? ? "無" : "#{@issue.assigned_to.lastname} #{@issue.assigned_to.firstname}"
+    @assigned_message = issue_assigned_changed?(@issue)
     @status_message = issue_status_changed?(@issue)
     speak "#{@editor.lastname} #{@editor.firstname} 編輯主旨:「#{@issue.subject}」. 狀態:「#{@status_message}」. 分派給:「#{@assigned_message}」. 意見:「#{truncate_words(@journal.notes)}」"
     speak "網址: http://#{Setting.host_name}/issues/#{@issue.id}"
@@ -63,6 +63,17 @@ private
       "從 #{old_status.name} 變更為 #{issue.status.name}"
     else
       "#{issue.status.name}"
+    end
+  end
+
+  def issue_assigned_changed?(issue)
+    if issue.assigned_to_id_changed?
+      old_assigned_to = User.find(issue.assigned_to_id_was) rescue nil
+      old_assigned = old_assigned_to.nil? ? "無" : "#{old_assigned_to.lastname} #{old_assigned_to.firstname}"
+      new_assigned = issue.assigned_to.nil? ? "無" : "#{issue.assigned_to.lastname} #{issue.assigned_to.firstname}"
+      "從 #{old_assigned} 變更為 #{new_assigned}"
+    else
+      issue.assigned_to.nil? ? "無" : "#{issue.assigned_to.lastname} #{issue.assigned_to.firstname}"
     end
   end
 
