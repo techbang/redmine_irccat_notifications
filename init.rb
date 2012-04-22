@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'redmine'
 require_dependency 'notifier_hook'
 

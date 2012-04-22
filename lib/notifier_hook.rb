@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'actionpack'
 class NotifierHook < Redmine::Hook::Listener
 
