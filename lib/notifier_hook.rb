@@ -51,7 +51,7 @@ class NotifierHook < Redmine::Hook::Listener
 private
 
   def speak(message)
-    system("echo -n '#{message}' | nc localhost 5678")
+    system("echo -n '#{message.delete("[\"\']")}' | nc localhost 5678")
   end
 
   def truncate_words(text, length = 20, end_string = '…')
